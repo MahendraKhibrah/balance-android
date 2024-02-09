@@ -1,4 +1,4 @@
-package com.example.balanse.ui.theme
+package com.example.balanse.common.theme
 
 import android.app.Activity
 import android.os.Build
