@@ -12,3 +12,11 @@ val WhiteTitle = TextStyle(
     fontWeight = FontWeight.Bold,
     letterSpacing = 0.5.sp
 )
+
+val WhiteBalance = TextStyle(
+    color = Color.White,
+    fontSize = 16.sp,
+    fontFamily = jakartaPlus,
+    fontWeight = FontWeight.Medium,
+    letterSpacing = 0.5.sp
+)

@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.balanse.presentation.features.auth.pages.OnboardPage
 import com.example.balanse.presentation.features.auth.pages.SplashPage
 
 @Composable
@@ -14,6 +15,7 @@ fun AppNavHost(
     startDestination: String = AppRoute.Splash.route,
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
-        composable(AppRoute.Splash.route) { SplashPage() }
+        composable(AppRoute.Splash.route) { SplashPage(navController) }
+        composable(AppRoute.Onboard.route) { OnboardPage() }
     }
 }
