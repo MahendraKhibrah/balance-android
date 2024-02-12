@@ -6,4 +6,6 @@
     <string name="track_your_expanses_description">Lacak pengeluaran Anda dan lihat kemana uang Anda pergi</string>
     <string name="manage_your_budget">Kelola anggaran Anda</string>
     <string name="manage_your_budget_description">Tetapkan anggaran dan pantau pengeluaran Anda</string>
+    <string name="welcome">Welcome</string>
+    <string name="login_or_register_description">Please log in using your account or register as a new user.</string>
 </resources>

@@ -5,6 +5,7 @@ sealed class AppRoute(val route: String){
 
     object Splash: AppRoute("splash")
     object Onboard: AppRoute("onboard")
+    object LoginOrRegister: AppRoute("login-or-register")
 
     fun withArgs(vararg args: Any?): String{
         return buildString {

@@ -36,17 +36,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.balanse.common.theme.WhiteBalance
-import com.example.balanse.common.theme.WhiteTitle
+import com.example.balanse.common.theme.WhiteParagraph
 import com.example.balanse.domain.models.auth.OnboardItem
 import com.example.balanse.presentation.features.auth.viewModels.OnboardingViewModel
+import com.example.balanse.presentation.navigation.AppRoute
 import kotlinx.coroutines.launch
 
 @Preview(showBackground = true)
 @Composable
 fun OnboardPage(
-    viewModel: OnboardingViewModel = hiltViewModel<OnboardingViewModel>()
-) {
+    viewModel: OnboardingViewModel = hiltViewModel<OnboardingViewModel>(),
+    navController: NavHostController,
+    ) {
     val onboardItems = viewModel.getOnboardItems(LocalContext.current)
     val pagerState: PagerState = rememberPagerState(
         pageCount = fun(): Int {
@@ -65,7 +68,7 @@ fun OnboardPage(
         ) {
             HorizontalPager(state = pagerState) {
                 val onboardItem = onboardItems[it]
-                OnboardItem(onboardItem = onboardItem, pagerState = pagerState)
+                OnboardItem(onboardItem = onboardItem, pagerState = pagerState, navController)
             }
         }
         Row(
@@ -73,7 +76,11 @@ fun OnboardPage(
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.Top
         ) {
-            Text(text = "Skip", style = WhiteBalance, modifier = Modifier.padding(16.dp))
+            Text(text = "Skip",
+                style = WhiteParagraph, modifier = Modifier.padding(16.dp).clickable {
+                    navController.navigate(AppRoute.LoginOrRegister.route)
+                },
+            )
         }
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -119,7 +126,8 @@ fun OnboardPage(
 @Composable
 fun OnboardItem(
     onboardItem: OnboardItem,
-    pagerState: PagerState
+    pagerState: PagerState,
+    navController: NavHostController,
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val scope = rememberCoroutineScope()
@@ -139,9 +147,9 @@ fun OnboardItem(
                 .width(screenWidth * 2 / 3)
                 .height(screenWidth * 4 / 5)
         )
-        Text(text = onboardItem.title, style = WhiteTitle, color = color)
+        Text(text = onboardItem.title, style = WhiteBalance, color = color)
         Box(Modifier.height(16.dp))
-        Text(text = onboardItem.description, style = WhiteBalance, textAlign = TextAlign.Center, color= color)
+        Text(text = onboardItem.description, style = WhiteParagraph, textAlign = TextAlign.Center, color= color)
         Box(Modifier.height(26.dp))
         Box(
             contentAlignment = Alignment.Center,
@@ -150,7 +158,10 @@ fun OnboardItem(
                 .height(screenWidth / 3)
                 .clickable {
                         scope.launch {
+                            if (pagerState.currentPage < pagerState.pageCount - 1)
                             pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                            else
+                                navController.navigate(AppRoute.LoginOrRegister.route)
                     }
                 },
 
