@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">balanse</string>
+    <string name="app_name">Balanse</string>
+    <string name="welcome_to_balanse">Selamat datang di Balanse</string>
+    <string name="welcome_to_balanse_description">Balanse adalah aplikasi sederhana dan mudah digunakan untuk mengelola keuangan Anda</string>
+    <string name="track_your_expanses">Lacak pengeluaran Anda</string>
+    <string name="track_your_expanses_description">Lacak pengeluaran Anda dan lihat kemana uang Anda pergi</string>
+    <string name="manage_your_budget">Kelola anggaran Anda</string>
+    <string name="manage_your_budget_description">Tetapkan anggaran dan pantau pengeluaran Anda</string>
 </resources>
