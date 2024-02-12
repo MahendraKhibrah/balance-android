@@ -19,9 +19,12 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.balanse.R
 import com.example.balanse.common.theme.*
+import com.example.balanse.presentation.features.auth.viewModels.SplashViewModel
 import com.example.balanse.presentation.navigation.AppRoute
 import kotlinx.coroutines.delay
 
@@ -29,13 +32,25 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashPage(
     navController: NavHostController,
+    viewModel : SplashViewModel = hiltViewModel<SplashViewModel>()
     ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val firstOpenAppState = viewModel.firstLoginStatusState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = true ){
-        delay(2000L)
-        Log.d("SplashPage", "SplashPage: navigating to OnboardPage")
-        navController.navigate(AppRoute.Onboard.route)
+        viewModel.getFirstLoginStatus()
+    }
+
+    LaunchedEffect(key1 = firstOpenAppState.value){
+        val isFirstOpenApp = firstOpenAppState.value.isFirstLogin
+        if (isFirstOpenApp != null){
+            delay(2000L)
+            if (isFirstOpenApp){
+                navController.navigate(AppRoute.Onboard.route)
+            } else {
+                navController.navigate(AppRoute.LoginOrRegister.route)
+            }
+        }
     }
 
     Box(
